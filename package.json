@@ -1,0 +1,45 @@
+{
+  "name": "docx-merge",
+  "version": "1.0.0",
+  "description": "A fast Node.js library written in TypeScript for merging two Microsoft Word (.docx) documents into one.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "docx",
+    "merge",
+    "typescript",
+    "nodejs",
+    "library",
+    "fast",
+    "microsoft word",
+    "document",
+    "office",
+    "xml",
+    "zip"
+  ],
+  "author": "Benedicte Giraud",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/node": "^22.15.3",
+    "@vitest/ui": "^3.1.2",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "fast-xml-parser": "^5.2.1"
+  }
+}
