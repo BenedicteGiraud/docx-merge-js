@@ -1,1 +1,1 @@
-export { mergeDocx } from "./mergeDocx";
+export { mergeDocx } from './mergeDocx';
