@@ -177,7 +177,7 @@ export const mergeDocx = (
   }
 
   if (!pattern && !insertStart && !insertEnd) {
-    throw new Error('Missing insert position or pattern');
+    throw new Error("At least one of 'pattern', 'insertStart', or 'insertEnd' must be provided.");
   }
 
   if (!fs.existsSync(sourcePath)) {
