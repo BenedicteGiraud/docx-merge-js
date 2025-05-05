@@ -1,5 +1,5 @@
 {
-  "name": "docx-merge",
+  "name": "@benedicte/docx-merge",
   "version": "1.0.0",
   "description": "A fast Node.js library written in TypeScript for merging two Microsoft Word (.docx) documents into one.",
   "type": "module",
