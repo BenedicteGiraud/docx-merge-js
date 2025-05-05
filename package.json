@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "A fast Node.js library written in TypeScript for merging two Microsoft Word (.docx) documents into one.",
   "type": "module",
-  "main": "dist/index.cjs",
+  "main": "index.cjs",
   "exports": {
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    "import": "./index.cjs",
+    "require": "./index.cjs"
   },
-  "types": "dist/index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
