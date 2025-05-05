@@ -38,5 +38,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          cp package.json dist/
+          cp package.json .npmrc dist/
+          cd dist
           npm publish --access public
