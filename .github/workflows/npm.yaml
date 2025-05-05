@@ -1,0 +1,47 @@
+name: 🚀 Publish on npm
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    name: 🚀 Publish on npm
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 🧾 Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: './.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📦 NPM install
+        run: npm ci
+
+      - name: 🏗️ NPM Build
+        shell: bash
+        run: |
+          tag_name=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
+          echo "Tag name: $tag_name"
+          npm version "$tag_name" --no-git-tag-version
+          echo "Version: $(cat package.json | jq -r '.version')"
+          npm run build
+
+      - name: 🚀 Publish
+        shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cp package.json .npmrc dist/
+          cd dist
+          ls -l
+          # npm publish 
+          # --access public
