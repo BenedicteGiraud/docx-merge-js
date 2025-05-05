@@ -1,4 +1,4 @@
-# 📄 docx-merge (not published on NPM yet)
+# 📄 docx-merge
 
 A fast and lightweight Node.js library written in TypeScript for merging two Microsoft Word (`.docx`) documents into one. Easily insert content at specific positions or based on placeholder patterns.
 
@@ -9,7 +9,7 @@ A fast and lightweight Node.js library written in TypeScript for merging two Mic
 Install via npm:
 
 ```bash
-npm install docx-merge
+npm install @benedicte/docx-merge
 ```
 
 📚 Dependencies
@@ -50,7 +50,7 @@ Parameters:
 ### Replace a placeholder in the source DOCX
 
 ```ts
-import { mergeDocx } from "docx-merge";
+import { mergeDocx } from "@benedicte/docx-merge";
 
 mergeDocx("./source.docx", "./table.docx", {
   outputPath: "./output.docx",
@@ -61,7 +61,7 @@ mergeDocx("./source.docx", "./table.docx", {
 ### Get the merged result as a Buffer
 
 ```ts
-import { mergeDocx } from "docx-merge";
+import { mergeDocx } from "@benedicte/docx-merge";
 
 const buffer = mergeDocx("./source.docx", "./table.docx", {
   pattern: "{{table}}",
@@ -73,6 +73,8 @@ const buffer = mergeDocx("./source.docx", "./table.docx", {
 ### Insert at the start of the document
 
 ```ts
+import { mergeDocx } from "@benedicte/docx-merge";
+
 mergeDocx("./source.docx", "./table.docx", {
   outputPath: "./output.docx",
   insertStart: true,
@@ -82,6 +84,8 @@ mergeDocx("./source.docx", "./table.docx", {
 ### Insert at the end of the document
 
 ```ts
+import { mergeDocx } from "@benedicte/docx-merge";
+
 mergeDocx("./source.docx", "./table.docx", {
   outputPath: "./output.docx",
   insertEnd: true,
