@@ -1,11 +1,5 @@
 name: 🚀 Publish on npm
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
   release:
     types:
       - published
@@ -35,8 +29,7 @@ jobs:
       - name: 🏗️ NPM Build
         shell: bash
         run: |
-          # tag_name=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
-          tag_name=0.1.0-rc1
+          tag_name=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
           npm version "$tag_name" --no-git-tag-version
           npm run build
 
