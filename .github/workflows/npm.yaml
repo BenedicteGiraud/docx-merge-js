@@ -1,8 +1,8 @@
 name: 🚀 Publish on npm
 on:
   release:
-    types: 
-      - created
+    types:
+      - published
 
 jobs:
   publish:
@@ -19,14 +19,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: './.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: 📦 NPM install
-        run: npm install
+        run: npm ci
 
       - name: 🏗️ NPM Build
-        run: npm run build
+        shell: bash
+        run: |
+          tag_name=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
+          echo "Tag name: $tag_name"
+          npm version "$tag_name" --no-git-tag-version
+          echo "Version: $(cat package.json | jq -r '.version')"
+          npm run build
 
       - name: 🚀 Publish
+        shell: bash
         env:
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: (cp package.json .npmrc dist/ && cd dist && npm publish --access public)
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cp package.json .npmrc dist/
+          cd dist
+          ls -l
+          # npm publish 
+          # --access public
