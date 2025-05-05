@@ -30,9 +30,7 @@ jobs:
         shell: bash
         run: |
           tag_name=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
-          echo "Tag name: $tag_name"
           npm version "$tag_name" --no-git-tag-version
-          echo "Version: $(cat package.json | jq -r '.version')"
           npm run build
 
       - name: 🚀 Publish
@@ -42,6 +40,5 @@ jobs:
         run: |
           cp package.json .npmrc dist/
           cd dist
-          ls -l
-          # npm publish 
-          # --access public
+          ls -la
+          npm publish --access public
