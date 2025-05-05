@@ -6,7 +6,9 @@ on:
 
 jobs:
   publish:
+    name: 🚀 Publish on npm
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: read
       packages: write
