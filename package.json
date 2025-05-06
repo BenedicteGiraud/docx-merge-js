@@ -2,6 +2,14 @@
   "name": "@benedicte/docx-merge",
   "version": "1.0.0",
   "description": "A fast Node.js library written in TypeScript for merging two Microsoft Word (.docx) documents into one.",
+  "bugs": {
+    "url": "https://github.com/BenedicteGiraud/docx-merge-js/issues"
+  },
+  "homepage": "https://github.com/BenedicteGiraud/docx-merge-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenedicteGiraud/docx-merge-js.git"
+  },
   "type": "module",
   "main": "index.cjs",
   "exports": {

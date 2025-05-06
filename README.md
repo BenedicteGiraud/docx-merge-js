@@ -12,7 +12,7 @@ Install via npm:
 npm install @benedicte/docx-merge
 ```
 
-📚 Dependencies
+## 📚 Dependencies
 
 Only two lightweight dependencies:
 
@@ -35,8 +35,8 @@ mergeDocx(
 ```
 
 Parameters:
-- `sourcePath` (*equired*) – Path to the base `.docx` file
-- `contentPath` (*equired*) – Path to the `.docx` file to insert into the base
+- `sourcePath` (*required*) – Path to the base `.docx` file
+- `contentPath` (*required*) – Path to the `.docx` file to insert into the base
 - `options`:
     - `outputPath` – If provided, writes the merged document to this path. If omitted, returns a `Buffer`
     - `pattern` – String pattern in the source file to replace with the inserted content
