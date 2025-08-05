@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mergeDocx } from '../src/index';
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, readFileSync, unlinkSync } from 'fs';
 
 describe('mergeDocx', () => {
   it('merges two DOCX files and creates output file', () => {
@@ -20,6 +20,16 @@ describe('mergeDocx', () => {
   it('merges two DOCX files and returns buffer', () => {
     const file1 = './tests/fixtures/template.docx';
     const file2 = './tests/fixtures/table.docx';
+
+    const buffer = mergeDocx(file1, file2, { pattern: '{{table}}' });
+
+    // Check if the buffer is not empty
+    expect(buffer).toBeInstanceOf(Buffer);
+  });
+
+  it('merges two DOCX buffers and returns buffer', () => {
+    const file1 = readFileSync('./tests/fixtures/template.docx');
+    const file2 = readFileSync('./tests/fixtures/table.docx');
 
     const buffer = mergeDocx(file1, file2, { pattern: '{{table}}' });
 
