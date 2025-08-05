@@ -220,5 +220,6 @@ export const mergeDocx = (
     return newZip.toBuffer();
   }
 
-  return newZip.writeZip(outputPath);
+  newZip.writeZip(outputPath);
+  return undefined;
 };
