@@ -1,15 +1,16 @@
-import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import { XMLParser, XMLBuilder, type X2jOptions, type XmlBuilderOptions } from 'fast-xml-parser';
 import AdmZip from 'adm-zip';
 import fs from 'fs';
 
 const documentXMLPath = 'word/document.xml';
 
 const parseXML = (xmlString: string) => {
-  const options = {
+  const options: X2jOptions = {
     allowBooleanAttributes: true,
     attributeNamePrefix: '@_',
     ignoreAttributes: false,
     preserveOrder: true,
+    trimValues: false,
   };
   const parser = new XMLParser(options);
   return parser.parse(xmlString);
@@ -17,7 +18,7 @@ const parseXML = (xmlString: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const buildXML = (xmlObject: any) => {
-  const options = {
+  const options: XmlBuilderOptions = {
     attributeNamePrefix: '@_',
     format: true,
     ignoreAttributes: false,
