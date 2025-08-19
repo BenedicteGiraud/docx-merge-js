@@ -1,15 +1,16 @@
-import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import { XMLParser, XMLBuilder, type X2jOptions, type XmlBuilderOptions } from 'fast-xml-parser';
 import AdmZip from 'adm-zip';
 import fs from 'fs';
 
 const documentXMLPath = 'word/document.xml';
 
 const parseXML = (xmlString: string) => {
-  const options = {
+  const options: X2jOptions = {
     allowBooleanAttributes: true,
     attributeNamePrefix: '@_',
     ignoreAttributes: false,
     preserveOrder: true,
+    trimValues: false,
   };
   const parser = new XMLParser(options);
   return parser.parse(xmlString);
@@ -17,7 +18,7 @@ const parseXML = (xmlString: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const buildXML = (xmlObject: any) => {
-  const options = {
+  const options: XmlBuilderOptions = {
     attributeNamePrefix: '@_',
     format: true,
     ignoreAttributes: false,
@@ -151,8 +152,8 @@ const getXmlBody = (xmlArray: any) => {
 };
 
 export const mergeDocx = (
-  sourcePath: string,
-  contentPath: string,
+  sourcePathOrBuffer: string | Buffer,
+  contentPathOrBuffer: string | Buffer,
   {
     outputPath,
     pattern,
@@ -165,12 +166,12 @@ export const mergeDocx = (
     insertEnd?: boolean;
   },
 ) => {
-  if (!sourcePath || !contentPath) {
+  if (!sourcePathOrBuffer || !contentPathOrBuffer) {
     throw new Error('Missing source or content path');
   }
   if (
-    !sourcePath.endsWith('.docx') ||
-    !contentPath.endsWith('.docx') ||
+    (typeof sourcePathOrBuffer === 'string' && !sourcePathOrBuffer.endsWith('.docx')) ||
+    (typeof contentPathOrBuffer === 'string' && !contentPathOrBuffer.endsWith('.docx')) ||
     (outputPath && !outputPath.endsWith('.docx'))
   ) {
     throw new Error('Invalid file extension. Only .docx files are supported');
@@ -180,25 +181,25 @@ export const mergeDocx = (
     throw new Error("At least one of 'pattern', 'insertStart', or 'insertEnd' must be provided.");
   }
 
-  if (!fs.existsSync(sourcePath)) {
-    throw new Error(`Source file does not exist: ${sourcePath}`);
+  if (typeof sourcePathOrBuffer === 'string' && !fs.existsSync(sourcePathOrBuffer)) {
+    throw new Error(`Source file does not exist: ${sourcePathOrBuffer}`);
   }
-  if (!fs.existsSync(contentPath)) {
-    throw new Error(`Content file does not exist: ${contentPath}`);
+  if (typeof contentPathOrBuffer === 'string' && !fs.existsSync(contentPathOrBuffer)) {
+    throw new Error(`Content file does not exist: ${contentPathOrBuffer}`);
   }
 
-  const zip = new AdmZip(sourcePath);
+  const zip = new AdmZip(sourcePathOrBuffer);
 
   const templateXML = zip.readAsText(documentXMLPath, 'utf8');
   if (!templateXML) {
-    throw new Error(`Entry ${documentXMLPath} not found in ${sourcePath}`);
+    throw new Error(`Entry ${documentXMLPath} not found in ${sourcePathOrBuffer}`);
   }
 
-  const contentZip = new AdmZip(contentPath);
+  const contentZip = new AdmZip(contentPathOrBuffer);
 
   const contentXML = contentZip.readAsText(documentXMLPath, 'utf8');
   if (!contentXML) {
-    throw new Error(`Entry ${documentXMLPath} not found in ${contentPath}`);
+    throw new Error(`Entry ${documentXMLPath} not found in ${contentPathOrBuffer}`);
   }
 
   const templateParsedXML = parseXML(templateXML);
@@ -219,5 +220,6 @@ export const mergeDocx = (
     return newZip.toBuffer();
   }
 
-  return newZip.writeZip(outputPath);
+  newZip.writeZip(outputPath);
+  return undefined;
 };
