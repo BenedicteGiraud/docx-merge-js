@@ -41,3 +41,7 @@ jobs:
       - name: 🔎 Run eslint
         shell: bash
         run: npm run lint
+
+      - name: 🔎 Run tests
+        shell: bash
+        run: npm test
