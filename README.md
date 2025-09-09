@@ -23,8 +23,8 @@ Only two lightweight dependencies:
 
 ```ts
 mergeDocx(
-  sourcePath: string,
-  contentPath: string,
+  sourcePathOrBuffer: string | Buffer,
+  contentPathOrBuffer: string | Buffer,
   options: {
     outputPath?: string;
     pattern?: string;
@@ -35,8 +35,8 @@ mergeDocx(
 ```
 
 Parameters:
-- `sourcePath` (*required*) – Path to the base `.docx` file
-- `contentPath` (*required*) – Path to the `.docx` file to insert into the base
+- `sourcePathOrBuffer` (*required*) – Path to the base `.docx` file or the Buffer
+- `contentPathOrBuffer` (*required*) – Path to the `.docx` file to insert into the base or the Buffer
 - `options`:
     - `outputPath` – If provided, writes the merged document to this path. If omitted, returns a `Buffer`
     - `pattern` – String pattern in the source file to replace with the inserted content
@@ -68,6 +68,20 @@ const buffer = mergeDocx("./source.docx", "./table.docx", {
 });
 
 // Use buffer (e.g., send as a response in a server)
+```
+
+### Input files as Buffers 
+
+```ts
+import { mergeDocx } from "@benedicte/docx-merge";
+
+const sourceBuffer = readFileSync('./source_file.docx');
+const contentBuffer = readFileSync('./content_to_insert_in_source_file.docx');
+
+const buffer = mergeDocx(sourceBuffer, contentBuffer, {
+  outputPath: "./output.docx",
+  pattern: "{{table}}",
+});
 ```
 
 ### Insert at the start of the document

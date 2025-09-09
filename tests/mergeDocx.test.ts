@@ -37,6 +37,19 @@ describe('mergeDocx', () => {
     expect(buffer).toBeInstanceOf(Buffer);
   });
 
+  it('merges two DOCX buffers and returns file', () => {
+    const file1 = readFileSync('./tests/fixtures/template.docx');
+    const file2 = readFileSync('./tests/fixtures/table.docx');
+
+    mergeDocx(file1, file2, { pattern: '{{table}}', outputPath: './tests/fixtures/output.docx' });
+
+    // Check if the file exists
+    expect(existsSync('./tests/fixtures/output.docx')).toBe(true);
+
+    // cleanup
+    unlinkSync('./tests/fixtures/output.docx');
+  });
+
   it('throws error if pattern is not found', () => {
     const file1 = './tests/fixtures/template.docx';
     const file2 = './tests/fixtures/table.docx';
